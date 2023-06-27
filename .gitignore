@@ -1,0 +1,5 @@
+
+.DS_Store
+*.pyc
+data/mnist_train.csv
+data/mnist_test.csv
