@@ -4,6 +4,8 @@ import json
 from json import JSONEncoder
 import io
 
+from utilities import NumpyArrayEncoder
+
 
 class numpy_nn:
     def __init__(
@@ -107,21 +109,6 @@ class numpy_nn:
     def update(self, new_params: dict) -> dict:
         self.params = new_params
 
-    # DEPRECIATED
-    def update_params(self, gradients: dict, lr: float):
-        p = {}
-        for idx in range(self.layers):
-            layer_idx = idx + 1
-            w = self.params["W" + str(layer_idx)]
-            b = self.params["b" + str(layer_idx)]
-            dw = gradients["dW" + str(layer_idx)]
-            db = gradients["db" + str(layer_idx)]
-            new_w = w - lr * dw
-            new_b = b - lr * db
-            p["W" + str(layer_idx)] = new_w
-            p["b" + str(layer_idx)] = new_b
-        self.update(p)
-
     def ReLU(self, Z: np.ndarray):
         # Returns raw value if above zero, else zero
         return np.maximum(Z, 0)
@@ -138,10 +125,3 @@ class numpy_nn:
         one_hot_Y[np.arange(Y.size), Y] = 1  # Setting the appropriate indices to 1
         one_hot_Y = one_hot_Y.T  # Transposing the matrix to match the expected shape
         return one_hot_Y
-
-
-class NumpyArrayEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return JSONEncoder.default(self, obj)

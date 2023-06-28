@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from model import numpy_nn
 
 
 class SimpleGradientDescent:
