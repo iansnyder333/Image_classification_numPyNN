@@ -14,7 +14,7 @@ datatrain = pd.read_csv("Image_classification_numPyNN/data/mnist_train.csv")
 
 data = np.array(datatrain)
 m, n = data.shape
-optimizer = SimpleGradientDescent(model, 0.05)
+optimizer = SimpleGradientDescent(model, 0.01)
 # shuffle before splitting into dev and training sets
 print(m, n)
 
@@ -26,9 +26,9 @@ X_train = X_train / 255.0
 _, m_train = X_train.shape
 X = X_train
 Y = Y_train
-checkpoint = 1000 // 5
+checkpoint = 10000 // 5
 
-for i in range(1000):
+for i in range(10000):
     output, memory = model.forward(X)
     gradients = model.backward(Y, memory)
     optimizer.step(gradients)
