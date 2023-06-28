@@ -7,7 +7,9 @@ from optimizer import SimpleGradientDescent
 from utilities import DataTransformer
 
 model = numpy_nn(784, 1, 10)
-model.load_model_state("Image_classification_numPyNN/src/models/model0.json")
+model.load_model_state(
+    "Image_classification_numPyNN/src/models/ImageClassificationModel.json"
+)
 datatrain = pd.read_csv("Image_classification_numPyNN/data/mnist_train.csv")
 
 X, Y = DataTransformer.split_prep_data(datatrain)
