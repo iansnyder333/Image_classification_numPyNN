@@ -4,6 +4,8 @@ from matplotlib import pyplot as plt
 
 import json
 from json import JSONEncoder
+import os
+import gzip
 
 
 class metrics:
@@ -76,15 +78,13 @@ class NumpyArrayEncoder(JSONEncoder):
 
 
 class DataTransformer:
-    def split_prep_data(data: pd.DataFrame):
+    def split_prep_data(data):
         data = np.array(data)
-        m, n = data.shape
         np.random.shuffle(data)
         data_train = data.T
         Y_train = data_train[0]
-        X_train = data_train[1:n]
-        X_train = X_train / 255.0
-        _, m_train = X_train.shape
+        X_train = data_train[1:]
+        X_train = X_train / np.max(X_train)
         X = X_train
         Y = Y_train
         return X, Y
@@ -113,3 +113,19 @@ class DataTransformer:
         if display:
             DataTransformer.display_data_image(current_image)
         return
+
+    # THIS FUNCTION WAS TAKEN FROM https://github.com/zalandoresearch/fashion-mnist/tree/master !!!!!!
+    def load_mnist(path, kind="train"):
+        """Load MNIST data from `path`"""
+        labels_path = os.path.join(path, "%s-labels-idx1-ubyte.gz" % kind)
+        images_path = os.path.join(path, "%s-images-idx3-ubyte.gz" % kind)
+
+        with gzip.open(labels_path, "rb") as lbpath:
+            labels = np.frombuffer(lbpath.read(), dtype=np.uint8, offset=8)
+
+        with gzip.open(images_path, "rb") as imgpath:
+            images = np.frombuffer(imgpath.read(), dtype=np.uint8, offset=16).reshape(
+                len(labels), 784
+            )
+
+        return images, labels

@@ -43,7 +43,7 @@ class numpy_nn:
             prev_A = cur_A
             layer_W = self.params["W" + str(layer_idx)]
             layer_b = self.params["b" + str(layer_idx)]
-            cur_Z = layer_W.dot(prev_A) + layer_b
+            cur_Z = layer_W @ prev_A + layer_b
             cur_A = (
                 self.ReLU(cur_Z) if layer_idx != self.layers else self.softmax(cur_Z)
             )
