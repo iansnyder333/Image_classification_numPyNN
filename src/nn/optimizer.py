@@ -3,10 +3,11 @@ import pandas as pd
 
 
 class SimpleGradientDescent:
-    def __init__(self, model, lr):
+    def __init__(self, model, lr, tolerance=1e-6):
         self.model = model
         self.params = model.parameters()
         self.alpha = lr
+        self.tolerance = tolerance
 
     def step(self, gradients):
         p = {}

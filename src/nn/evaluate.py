@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from model import numpy_nn
+from model import numpy_fnn
 from utilities import metrics, DataTransformer
 
 
@@ -30,7 +30,7 @@ class ClassificationReport:
         return report
 
 
-model = numpy_nn(784, 1, 10)
+model = numpy_fnn(784, 1, 10)
 model.load_model_state(
     "Image_classification_numPyNN/src/models/ImageClassificationModel.json"
 )

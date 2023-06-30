@@ -3,34 +3,36 @@ import pandas as pd
 import json
 from json import JSONEncoder
 import io
-
+import os
 from utilities import NumpyArrayEncoder
 
 
-class numpy_nn:
+class numpy_fnn:
     def __init__(
-        self, input_layers: int, hidden_layers: int, output_layers: int
+        self, input_size: int, hidden_size: int, output_size: int, hidden_layers=1
     ) -> None:
-        self.params = self._init_layers(input_layers, hidden_layers, output_layers)
+        self.params = self._init_layers(
+            input_size, hidden_size, output_size, hidden_layers
+        )
         self.layers = len(self.params) // 2
 
     def _init_layers(
-        self, input_layers: int, hidden_layers: int, output_layers: int
+        self, input_size: int, hidden_size: int, output_size: int, hidden_layers: int
     ) -> dict:
         param_values = {}
         for idx in range(hidden_layers):
             layer_idx = idx + 1
             param_values["W" + str(layer_idx)] = (
-                np.random.rand(output_layers, input_layers) - 0.5
+                np.random.rand(hidden_size, input_size) - 0.5
             )
             param_values["b" + str(layer_idx)] = (
-                np.random.rand(output_layers, hidden_layers) - 0.5
+                np.random.rand(hidden_size, hidden_layers) - 0.5
             )
         param_values["W" + str(hidden_layers + 1)] = (
-            np.random.rand(output_layers, output_layers) - 0.5
+            np.random.rand(output_size, hidden_size) - 0.5
         )
         param_values["b" + str(hidden_layers + 1)] = (
-            np.random.rand(output_layers, hidden_layers) - 0.5
+            np.random.rand(output_size, hidden_layers) - 0.5
         )
         return param_values
 
@@ -86,13 +88,17 @@ class numpy_nn:
             print("Model failed to load")
             return False
 
-    def save_model_state(self) -> None:
+    def save_model_state(
+        self, name="model0", path="Image_classification_numPyNN/src/models"
+    ) -> None:
         data = {"model_params": self.parameters()}
         try:
             to_unicode = unicode
         except NameError:
             to_unicode = str
-        with io.open("model0.json", "w", encoding="utf8") as outfile:
+        filename = "".join([name, ".json"])
+        filepath = os.path.join(path, filename)
+        with io.open(filepath, "w", encoding="utf8") as outfile:
             str_ = json.dumps(
                 data,
                 cls=NumpyArrayEncoder,
@@ -117,6 +123,8 @@ class numpy_nn:
         return Z > 0
 
     def softmax(self, Z: np.ndarray):
+        # Z_max = np.max(Z)
+        # A = np.exp(Z - Z_max) / np.sum(np.exp(Z - Z_max))
         A = np.exp(Z) / sum(np.exp(Z))
         return A
 
