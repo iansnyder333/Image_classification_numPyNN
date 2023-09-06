@@ -1,4 +1,4 @@
-# Image Classification Neural Network Library from Scratch (IN PROGRESS)
+# Image Classification Neural Network Library from Scratch
 
 While packages such as PyTorch and TensorFlow are incredible tools for machine learning engineers, building your own models from scratch without the use of such libraries is an incredible way to improve and learn the fundemental mathmatics and statistics that allow machine learning to work. 
 
