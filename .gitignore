@@ -3,3 +3,13 @@
 *.pyc
 data/mnist_train.csv
 data/mnist_test.csv
+*.pt
+*.pth
+*.gz
+data/MNIST_data/MNIST/raw/t10k-images-idx3-ubyte
+data/FashionMNIST_data/FashionMNIST/raw/t10k-images-idx3-ubyte
+data/FashionMNIST_data/FashionMNIST/raw/t10k-labels-idx1-ubyte
+data/FashionMNIST_data/FashionMNIST/raw/train-images-idx3-ubyte
+data/FashionMNIST_data/FashionMNIST/raw/train-labels-idx1-ubyte
+*.gz
+data/fasion/t10k-images-idx3-ubyte.gz

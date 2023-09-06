@@ -1,0 +1,5 @@
+BATCH_SIZE = 32
+KEEP_PROB = 1
+
+LR = 3e-4
+EPOCHS = 1
